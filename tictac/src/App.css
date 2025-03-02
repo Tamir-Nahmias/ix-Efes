@@ -53,8 +53,13 @@ button {
 }
 .conatainerBox {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Creates 3 equal columns */
-  grid-template-rows: repeat(3, 1fr); /* Creates 3 equal rows */
+  /* grid-template-columns: 1fr 1fr 1fr; Creates 3 equal columns */
+  grid-template-columns: repeat(
+    var(--cubesize),
+    1fr
+  ); /* Creates 3 equal columns */
+  /* grid-template-rows: repeat(3, 1fr); Creates 3 equal rows */
+  grid-template-rows: repeat(var(--cubesize), 1fr);
   /* gap: 10px; Optional: adds spacing between grid items */
   margin-top: 20px;
 }

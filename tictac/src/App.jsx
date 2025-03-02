@@ -2,13 +2,11 @@ import { useState } from "react";
 import "./App.css";
 import Square from "./square";
 
-//const matrixSize = prompt("please enter a value:")
-
-function App() {
+function App(props) {
+  const matrixSize = props.matrixSize;
   const [isX, setIsX] = useState(true);
-  const [matrix, setMatrix] = useState([, , , , , , , ,]);
+  const [matrix, setMatrix] = useState(Array(matrixSize).fill(null));
   const [matrixesSteps, setmatrixesSteps] = useState([[]]);
-  const [isWon, setisWon] = useState(false);
 
   function winner() {
     // First, define what an empty/uninitialized cell looks like
@@ -47,8 +45,21 @@ function App() {
   return (
     <>
       <div className="win-title">{winner() && "you won"}</div>
-      <div className="conatainerBox">
-        <Square
+      <div className="conatainerBox" style={{ "--cubesize": matrixSize }}>
+        {Array(matrixSize * matrixSize)
+          .fill(null)
+          .map((_, index) => (
+            <Square
+              key={index}
+              isX={isX}
+              setIsX={setIsX}
+              id={index.toString()}
+              updateArr={updateArr}
+              winner={winner}
+            />
+          ))}
+
+        {/* <Square
           isX={isX}
           setIsX={setIsX}
           id="0"
@@ -110,7 +121,7 @@ function App() {
           id="8"
           updateArr={updateArr}
           winner={winner}
-        />
+        /> */}
       </div>
     </>
   );
