@@ -8,6 +8,7 @@ function App() {
   const [isX, setIsX] = useState(true);
   const [matrix, setMatrix] = useState([, , , , , , , ,]);
   const [matrixesSteps, setmatrixesSteps] = useState([[]]);
+  const [isWon, setisWon] = useState(false);
 
   function winner() {
     // First, define what an empty/uninitialized cell looks like
@@ -25,18 +26,14 @@ function App() {
 
     // Check all possible winning lines
     return (
-      (checkLine(0, 1, 2) || // top row
-        checkLine(3, 4, 5) || // middle row
-        checkLine(6, 7, 8) || // bottom row
-        checkLine(0, 3, 6) || // left column
-        checkLine(1, 4, 7) || // middle column
-        checkLine(2, 5, 8) || // right column
-        checkLine(0, 4, 8) || // diagonal \
-        checkLine(2, 4, 6)) && ( // diagonal /
-        <>
-          <h1>You won</h1>
-        </>
-      )
+      checkLine(0, 1, 2) || // top row
+      checkLine(3, 4, 5) || // middle row
+      checkLine(6, 7, 8) || // bottom row
+      checkLine(0, 3, 6) || // left column
+      checkLine(1, 4, 7) || // middle column
+      checkLine(2, 5, 8) || // right column
+      checkLine(0, 4, 8) || // diagonal \
+      checkLine(2, 4, 6) // diagonal /
     );
   }
 
@@ -44,28 +41,76 @@ function App() {
     const newArr = [...matrix];
     newArr[index] = value;
     setMatrix(newArr);
-    //setmatrixesSteps(...matrixesSteps, newArr);
+    setmatrixesSteps([...matrixesSteps, matrix]);
   };
 
   return (
     <>
-      {winner()}
+      <div className="win-title">{winner() && "you won"}</div>
       <div className="conatainerBox">
-        <div>
-          <Square isX={isX} setIsX={setIsX} id="0" updateArr={updateArr} />
-          <Square isX={isX} setIsX={setIsX} id="1" updateArr={updateArr} />
-          <Square isX={isX} setIsX={setIsX} id="2" updateArr={updateArr} />
-        </div>
-        <div>
-          <Square isX={isX} setIsX={setIsX} id="3" updateArr={updateArr} />
-          <Square isX={isX} setIsX={setIsX} id="4" updateArr={updateArr} />
-          <Square isX={isX} setIsX={setIsX} id="5" updateArr={updateArr} />
-        </div>
-        <div>
-          <Square isX={isX} setIsX={setIsX} id="6" updateArr={updateArr} />
-          <Square isX={isX} setIsX={setIsX} id="7" updateArr={updateArr} />
-          <Square isX={isX} setIsX={setIsX} id="8" updateArr={updateArr} />
-        </div>
+        <Square
+          isX={isX}
+          setIsX={setIsX}
+          id="0"
+          updateArr={updateArr}
+          winner={winner}
+        />
+        <Square
+          isX={isX}
+          setIsX={setIsX}
+          id="1"
+          updateArr={updateArr}
+          winner={winner}
+        />
+        <Square
+          isX={isX}
+          setIsX={setIsX}
+          id="2"
+          updateArr={updateArr}
+          winner={winner}
+        />
+        <Square
+          isX={isX}
+          setIsX={setIsX}
+          id="3"
+          updateArr={updateArr}
+          winner={winner}
+        />
+        <Square
+          isX={isX}
+          setIsX={setIsX}
+          id="4"
+          updateArr={updateArr}
+          winner={winner}
+        />
+        <Square
+          isX={isX}
+          setIsX={setIsX}
+          id="5"
+          updateArr={updateArr}
+          winner={winner}
+        />
+        <Square
+          isX={isX}
+          setIsX={setIsX}
+          id="6"
+          updateArr={updateArr}
+          winner={winner}
+        />
+        <Square
+          isX={isX}
+          setIsX={setIsX}
+          id="7"
+          updateArr={updateArr}
+          winner={winner}
+        />
+        <Square
+          isX={isX}
+          setIsX={setIsX}
+          id="8"
+          updateArr={updateArr}
+          winner={winner}
+        />
       </div>
     </>
   );
