@@ -5,7 +5,7 @@ import Square from "./square";
 function App(props) {
   const matrixSize = props.matrixSize;
   const [isX, setIsX] = useState(true);
-  const [matrix, setMatrix] = useState(Array(matrixSize).fill(null));
+  const [matrix, setMatrix] = useState([]);
   const [matrixesSteps, setmatrixesSteps] = useState([[]]);
 
   function winner() {
@@ -46,7 +46,7 @@ function App(props) {
     <>
       <div className="win-title">{winner() && "you won"}</div>
       <div className="conatainerBox" style={{ "--cubesize": matrixSize }}>
-        {Array(matrixSize * matrixSize)
+        {Array(matrixSize ** 2)
           .fill(null)
           .map((_, index) => (
             <Square
