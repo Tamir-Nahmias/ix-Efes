@@ -5,7 +5,7 @@ import Square from "./square";
 function App(props) {
   const matrixSize = props.matrixSize;
   const [isX, setIsX] = useState(true);
-  const [matrix, setMatrix] = useState([]);
+  const [matrix, setMatrix] = useState(Array(matrixSize ** 2).fill(null));
   const [matrixesSteps, setmatrixesSteps] = useState([[]]);
 
   function winner() {
@@ -13,26 +13,48 @@ function App(props) {
     const isEmpty = (value) =>
       value === null || value === undefined || value === "";
 
-    // Helper function to check a line (3 positions)
-    const checkLine = (a, b, c) => {
-      return (
-        matrix[a] === matrix[b] &&
-        matrix[b] === matrix[c] &&
-        !isEmpty(matrix[a])
-      );
-    };
+    const arr = [...matrix];
+    const diagonalArr1 = [];
+    const diagonalArr2 = [];
 
-    // Check all possible winning lines
-    return (
-      checkLine(0, 1, 2) || // top row
-      checkLine(3, 4, 5) || // middle row
-      checkLine(6, 7, 8) || // bottom row
-      checkLine(0, 3, 6) || // left column
-      checkLine(1, 4, 7) || // middle column
-      checkLine(2, 5, 8) || // right column
-      checkLine(0, 4, 8) || // diagonal \
-      checkLine(2, 4, 6) // diagonal /
-    );
+    for (let i = 0, j = 1; i < matrixSize; i++, j++) {
+      diagonalArr1.push(arr[i + matrixSize * i]);
+      diagonalArr2.push(arr[(matrixSize - 1) * j]);
+    }
+
+    //the below is for the colomuns :
+    const arrofCol = [];
+    let i = 0,
+      j = 0;
+
+    while (j < matrixSize) {
+      const arrhelper = [];
+      while (i < matrixSize) {
+        arrhelper.push(arr[i * matrixSize + j]);
+        i++;
+      }
+      j++;
+      i = 0;
+      arrofCol.push(arrhelper);
+    }
+
+    //the below is for the rows
+    const arrOfRows = [];
+
+    while (arr.length !== 0) {
+      arrOfRows.push(arr.splice(0, matrixSize));
+    }
+
+    const CombinedArrays = [
+      ...arrOfRows,
+      ...arrofCol,
+      [...diagonalArr1],
+      [...diagonalArr2],
+    ];
+    console.log(CombinedArrays);
+    return CombinedArrays.some((array) => {
+      return array.every((val) => val === array[0] && !isEmpty(val));
+    });
   }
 
   const updateArr = (index, value) => {
@@ -58,70 +80,6 @@ function App(props) {
               winner={winner}
             />
           ))}
-
-        {/* <Square
-          isX={isX}
-          setIsX={setIsX}
-          id="0"
-          updateArr={updateArr}
-          winner={winner}
-        />
-        <Square
-          isX={isX}
-          setIsX={setIsX}
-          id="1"
-          updateArr={updateArr}
-          winner={winner}
-        />
-        <Square
-          isX={isX}
-          setIsX={setIsX}
-          id="2"
-          updateArr={updateArr}
-          winner={winner}
-        />
-        <Square
-          isX={isX}
-          setIsX={setIsX}
-          id="3"
-          updateArr={updateArr}
-          winner={winner}
-        />
-        <Square
-          isX={isX}
-          setIsX={setIsX}
-          id="4"
-          updateArr={updateArr}
-          winner={winner}
-        />
-        <Square
-          isX={isX}
-          setIsX={setIsX}
-          id="5"
-          updateArr={updateArr}
-          winner={winner}
-        />
-        <Square
-          isX={isX}
-          setIsX={setIsX}
-          id="6"
-          updateArr={updateArr}
-          winner={winner}
-        />
-        <Square
-          isX={isX}
-          setIsX={setIsX}
-          id="7"
-          updateArr={updateArr}
-          winner={winner}
-        />
-        <Square
-          isX={isX}
-          setIsX={setIsX}
-          id="8"
-          updateArr={updateArr}
-          winner={winner}
-        /> */}
       </div>
     </>
   );
